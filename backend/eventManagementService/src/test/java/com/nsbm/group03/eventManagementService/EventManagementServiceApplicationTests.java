@@ -1,10 +1,10 @@
-package com.nsbm.group03.posManagementService;
+package com.nsbm.group03.eventManagementService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PosManagementServiceApplicationTests {
+class EventManagementServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

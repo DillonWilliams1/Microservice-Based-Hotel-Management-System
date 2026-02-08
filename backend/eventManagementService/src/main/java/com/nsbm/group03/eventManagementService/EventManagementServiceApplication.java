@@ -1,13 +1,13 @@
-package com.nsbm.group03.posManagementService;
+package com.nsbm.group03.eventManagementService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PosManagementServiceApplication {
+public class EventManagementServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PosManagementServiceApplication.class, args);
+		SpringApplication.run(EventManagementServiceApplication.class, args);
 	}
 
 }
