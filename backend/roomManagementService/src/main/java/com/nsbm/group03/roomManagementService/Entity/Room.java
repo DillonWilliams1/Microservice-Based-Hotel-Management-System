@@ -2,7 +2,12 @@ package com.nsbm.group03.roomManagementService.Entity;
 
 import java.util.UUID;
 
+import com.nsbm.group03.roomManagementService.Enum.RoomStatus;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 
@@ -11,11 +16,16 @@ public class Room {
 
     @Id    
     private String roomId;
+    
+    @Column(unique = true, nullable = false)
     private String roomNumber;
     private String roomType;
     private double pricePerNight;
     private int capacity;
-    private String status;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoomStatus status;
 
     @PrePersist
     public void generateId() {
@@ -25,7 +35,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(String roomId, String roomNumber, String roomType, double pricePerNight, int capacity, String status) {
+    public Room(String roomId, String roomNumber, String roomType, double pricePerNight, int capacity, RoomStatus status) {
         this.roomId = roomId;
         this.roomNumber = roomNumber;
         this.roomType = roomType;
@@ -66,10 +76,10 @@ public class Room {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-    public String getStatus() {
+    public RoomStatus getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(RoomStatus status) {
         this.status = status;
     }
 
