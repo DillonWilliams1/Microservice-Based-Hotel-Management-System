@@ -32,91 +32,91 @@ public class DataInitializer implements CommandLineRunner {
         
         List<Employee> employees = Arrays.asList(
             // Front Desk Department
-            new Employee("John", "Smith", "john.smith@hotel.com", "1234567890",
-                "Front Desk Manager", "FRONT_DESK", 55000.0, 
-                LocalDate.of(2022, 1, 15), "ACTIVE", "123 Main St, City"),
+            new Employee("Kasun", "Perera", "kasun.perera@hotel.com", "0771234567",
+                "Front Desk Manager", "FRONT_DESK", 85000.0, 
+                LocalDate.of(2022, 1, 15), "ACTIVE", "123 Galle Road, Colombo 03"),
             
-            new Employee("Sarah", "Johnson", "sarah.johnson@hotel.com", "1234567891",
-                "Receptionist", "FRONT_DESK", 35000.0, 
-                LocalDate.of(2023, 3, 20), "ACTIVE", "456 Oak Ave, City"),
+            new Employee("Sanduni", "Fernando", "sanduni.fernando@hotel.com", "0772345678",
+                "Receptionist", "FRONT_DESK", 55000.0, 
+                LocalDate.of(2023, 3, 20), "ACTIVE", "456 Bauddhaloka Mawatha, Colombo 07"),
             
-            new Employee("Michael", "Brown", "michael.brown@hotel.com", "1234567892",
-                "Receptionist", "FRONT_DESK", 34000.0, 
-                LocalDate.of(2023, 6, 10), "ACTIVE", "789 Pine St, City"),
+            new Employee("Chaminda", "Silva", "chaminda.silva@hotel.com", "0773456789",
+                "Receptionist", "FRONT_DESK", 52000.0, 
+                LocalDate.of(2023, 6, 10), "ACTIVE", "789 Duplication Road, Colombo 04"),
             
             // Housekeeping Department
-            new Employee("Emily", "Davis", "emily.davis@hotel.com", "1234567893",
-                "Housekeeping Manager", "HOUSEKEEPING", 48000.0, 
-                LocalDate.of(2021, 5, 1), "ACTIVE", "321 Elm St, City"),
+            new Employee("Nadeeka", "Jayawardena", "nadeeka.jayawardena@hotel.com", "0774567890",
+                "Housekeeping Manager", "HOUSEKEEPING", 72000.0, 
+                LocalDate.of(2021, 5, 1), "ACTIVE", "321 Baseline Road, Colombo 09"),
             
-            new Employee("David", "Wilson", "david.wilson@hotel.com", "1234567894",
-                "Housekeeper", "HOUSEKEEPING", 32000.0, 
-                LocalDate.of(2023, 2, 14), "ACTIVE", "654 Maple Dr, City"),
+            new Employee("Priyantha", "Dissanayake", "priyantha.dissanayake@hotel.com", "0775678901",
+                "Housekeeper", "HOUSEKEEPING", 48000.0, 
+                LocalDate.of(2023, 2, 14), "ACTIVE", "654 Kandy Road, Kadawatha"),
             
-            new Employee("Lisa", "Martinez", "lisa.martinez@hotel.com", "1234567895",
-                "Housekeeper", "HOUSEKEEPING", 31000.0, 
-                LocalDate.of(2023, 7, 22), "ON_LEAVE", "987 Cedar Ln, City"),
+            new Employee("Kumari", "Rajapaksha", "kumari.rajapaksha@hotel.com", "0776789012",
+                "Housekeeper", "HOUSEKEEPING", 46000.0, 
+                LocalDate.of(2023, 7, 22), "ON_LEAVE", "987 Negombo Road, Wattala"),
             
             // Kitchen Department
-            new Employee("James", "Anderson", "james.anderson@hotel.com", "1234567896",
-                "Head Chef", "KITCHEN", 65000.0, 
-                LocalDate.of(2020, 9, 1), "ACTIVE", "147 Birch Rd, City"),
+            new Employee("Roshan", "Wickramasinghe", "roshan.wickramasinghe@hotel.com", "0777890123",
+                "Head Chef", "KITCHEN", 95000.0, 
+                LocalDate.of(2020, 9, 1), "ACTIVE", "147 Hospital Road, Kalubowila"),
             
-            new Employee("Maria", "Garcia", "maria.garcia@hotel.com", "1234567897",
-                "Sous Chef", "KITCHEN", 52000.0, 
-                LocalDate.of(2021, 11, 15), "ACTIVE", "258 Spruce Ave, City"),
+            new Employee("Dilini", "Gunawardena", "dilini.gunawardena@hotel.com", "0778901234",
+                "Sous Chef", "KITCHEN", 78000.0, 
+                LocalDate.of(2021, 11, 15), "ACTIVE", "258 Old Moor Street, Colombo 12"),
             
-            new Employee("Robert", "Lee", "robert.lee@hotel.com", "1234567898",
-                "Line Cook", "KITCHEN", 38000.0, 
-                LocalDate.of(2022, 4, 10), "ACTIVE", "369 Willow St, City"),
+            new Employee("Nuwan", "Amarasinghe", "nuwan.amarasinghe@hotel.com", "0779012345",
+                "Line Cook", "KITCHEN", 58000.0, 
+                LocalDate.of(2022, 4, 10), "ACTIVE", "369 High Level Road, Nugegoda"),
             
-            new Employee("Jennifer", "Taylor", "jennifer.taylor@hotel.com", "1234567899",
-                "Pastry Chef", "KITCHEN", 45000.0, 
-                LocalDate.of(2022, 8, 5), "ACTIVE", "741 Ash Blvd, City"),
+            new Employee("Thilini", "Bandara", "thilini.bandara@hotel.com", "0770123456",
+                "Pastry Chef", "KITCHEN", 68000.0, 
+                LocalDate.of(2022, 8, 5), "ACTIVE", "741 Kotte Road, Rajagiriya"),
             
             // Restaurant Department
-            new Employee("William", "Thomas", "william.thomas@hotel.com", "1234567800",
-                "Restaurant Manager", "RESTAURANT", 58000.0, 
-                LocalDate.of(2021, 3, 1), "ACTIVE", "852 Cherry Ln, City"),
+            new Employee("Anil", "Samaraweera", "anil.samaraweera@hotel.com", "0711234567",
+                "Restaurant Manager", "RESTAURANT", 88000.0, 
+                LocalDate.of(2021, 3, 1), "ACTIVE", "852 Kirimandala Mawatha, Narahenpita"),
             
-            new Employee("Jessica", "White", "jessica.white@hotel.com", "1234567801",
-                "Waiter", "RESTAURANT", 30000.0, 
-                LocalDate.of(2023, 1, 20), "ACTIVE", "963 Poplar Dr, City"),
+            new Employee("Hashini", "De Silva", "hashini.desilva@hotel.com", "0712345678",
+                "Waiter", "RESTAURANT", 45000.0, 
+                LocalDate.of(2023, 1, 20), "ACTIVE", "963 Nawala Road, Nugegoda"),
             
-            new Employee("Christopher", "Harris", "christopher.harris@hotel.com", "1234567802",
-                "Waiter", "RESTAURANT", 29000.0, 
-                LocalDate.of(2023, 5, 15), "ACTIVE", "159 Hickory St, City"),
+            new Employee("Buddhika", "Rathnayake", "buddhika.rathnayake@hotel.com", "0713456789",
+                "Waiter", "RESTAURANT", 44000.0, 
+                LocalDate.of(2023, 5, 15), "ACTIVE", "159 Kadawatha Road, Ragama"),
             
             // Maintenance Department
-            new Employee("Daniel", "Clark", "daniel.clark@hotel.com", "1234567803",
-                "Maintenance Manager", "MAINTENANCE", 52000.0, 
-                LocalDate.of(2020, 7, 1), "ACTIVE", "357 Walnut Ave, City"),
+            new Employee("Janaka", "Wijesinghe", "janaka.wijesinghe@hotel.com", "0714567890",
+                "Maintenance Manager", "MAINTENANCE", 78000.0, 
+                LocalDate.of(2020, 7, 1), "ACTIVE", "357 Pannipitiya Road, Battaramulla"),
             
-            new Employee("Amanda", "Lewis", "amanda.lewis@hotel.com", "1234567804",
-                "Maintenance Technician", "MAINTENANCE", 40000.0, 
-                LocalDate.of(2022, 10, 20), "ACTIVE", "486 Beech Rd, City"),
+            new Employee("Chamila", "Senarath", "chamila.senarath@hotel.com", "0715678901",
+                "Maintenance Technician", "MAINTENANCE", 60000.0, 
+                LocalDate.of(2022, 10, 20), "ACTIVE", "486 Homagama Road, Kottawa"),
             
             // Management
-            new Employee("Thomas", "Walker", "thomas.walker@hotel.com", "1234567805",
-                "General Manager", "MANAGEMENT", 85000.0, 
-                LocalDate.of(2019, 1, 1), "ACTIVE", "579 Sycamore Blvd, City"),
+            new Employee("Aruna", "Wickremesinghe", "aruna.wickremesinghe@hotel.com", "0716789012",
+                "General Manager", "MANAGEMENT", 125000.0, 
+                LocalDate.of(2019, 1, 1), "ACTIVE", "579 Green Path, Colombo 03"),
             
-            new Employee("Patricia", "Hall", "patricia.hall@hotel.com", "1234567806",
-                "HR Manager", "MANAGEMENT", 62000.0, 
-                LocalDate.of(2020, 3, 15), "ACTIVE", "681 Magnolia Dr, City"),
+            new Employee("Sachini", "Kumarasinghe", "sachini.kumarasinghe@hotel.com", "0717890123",
+                "HR Manager", "MANAGEMENT", 92000.0, 
+                LocalDate.of(2020, 3, 15), "ACTIVE", "681 Havelock Road, Colombo 05"),
             
-            new Employee("Richard", "Allen", "richard.allen@hotel.com", "1234567807",
-                "Finance Manager", "MANAGEMENT", 68000.0, 
-                LocalDate.of(2020, 6, 1), "ACTIVE", "792 Dogwood St, City"),
+            new Employee("Mahinda", "Jayasuriya", "mahinda.jayasuriya@hotel.com", "0718901234",
+                "Finance Manager", "MANAGEMENT", 102000.0, 
+                LocalDate.of(2020, 6, 1), "ACTIVE", "792 Union Place, Colombo 02"),
             
             // Security Department
-            new Employee("Linda", "Young", "linda.young@hotel.com", "1234567808",
-                "Security Manager", "SECURITY", 50000.0, 
-                LocalDate.of(2021, 2, 1), "ACTIVE", "804 Redwood Ave, City"),
+            new Employee("Saman", "Ranasinghe", "saman.ranasinghe@hotel.com", "0719012345",
+                "Security Manager", "SECURITY", 75000.0, 
+                LocalDate.of(2021, 2, 1), "ACTIVE", "804 Galle Road, Dehiwala"),
             
-            new Employee("Joseph", "King", "joseph.king@hotel.com", "1234567809",
-                "Security Guard", "SECURITY", 36000.0, 
-                LocalDate.of(2022, 12, 10), "ACTIVE", "915 Fir Ln, City")
+            new Employee("Lakmal", "Gunasekara", "lakmal.gunasekara@hotel.com", "0710123456",
+                "Security Guard", "SECURITY", 54000.0, 
+                LocalDate.of(2022, 12, 10), "ACTIVE", "915 Moratuwa Road, Piliyandala")
         );
         
         employeeRepository.saveAll(employees);
