@@ -1,19 +1,47 @@
 package com.nsbm.group03.employeeManagementService.dto;
 
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 public class EmployeeDTO {
     
     private Long id;
+    
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
     private String firstName;
+    
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     private String lastName;
+    
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email must be valid")
     private String email;
+    
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^[0-9]{10,15}$", message = "Phone number must be between 10 and 15 digits")
     private String phone;
+    
+    @NotBlank(message = "Position is required")
+    @Size(min = 2, max = 100, message = "Position must be between 2 and 100 characters")
     private String position;
+    
+    @NotBlank(message = "Department is required")
     private String department;
+    
+    @NotNull(message = "Salary is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Salary must be greater than 0")
     private Double salary;
+    
+    @NotNull(message = "Hire date is required")
+    @PastOrPresent(message = "Hire date cannot be in the future")
     private LocalDate hireDate;
+    
+    @NotBlank(message = "Status is required")
     private String status;
+    
+    @Size(max = 500, message = "Address must not exceed 500 characters")
     private String address;
     
     // Constructors
