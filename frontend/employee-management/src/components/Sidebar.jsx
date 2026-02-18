@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Users, BarChart3, UserPlus, Building2 } from 'lucide-react';
+import { Home, Users, BarChart3, UserPlus } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -15,7 +15,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <Building2 className="hotel-icon" size={32} />
+        <img src="/Hotel_Logo.png" alt="ආලකමන්දා Hotel Logo" className="hotel-logo" />
         <h2 className="hotel-name">ආලකමන්දා</h2>
         <p className="hotel-subtitle">Hotel Management</p>
       </div>
