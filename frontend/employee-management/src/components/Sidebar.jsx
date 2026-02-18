@@ -15,9 +15,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <img src="/Hotel_Logo.png" alt="ආලකමන්දා Hotel Logo" className="hotel-logo" />
-        <h2 className="hotel-name">ආලකමන්දා</h2>
-        <p className="hotel-subtitle">Hotel Management</p>
+        <img src="/Hotel_Logo.png" alt="Hotel Logo" className="hotel-logo" />
       </div>
       
       <nav className="sidebar-nav">
