@@ -24,11 +24,18 @@ class AppColors {
 class _DashboardScreenState extends State<DashboardScreen> {
   final InventoryService _inventoryService = InventoryService();
   late Future<List<InventoryItem>> _inventoryFuture;
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _inventoryFuture = _inventoryService.fetchInventory();
+    _fetchData();
+  }
+
+  void _fetchData() {
+    setState(() {
+      _inventoryFuture = _inventoryService.fetchInventory();
+    });
   }
 
   @override
@@ -337,19 +344,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ],
                 ),
-                child: const TextField(
+                child: TextField(
+                  controller: _searchController,
+                  onSubmitted: (value) {
+                    setState(() {
+                      if (value.isEmpty) {
+                        _fetchData();
+                      } else {
+                        _inventoryFuture = _inventoryService.searchItems(value);
+                      }
+                    });
+                  },
                   decoration: InputDecoration(
                     hintText: "Search inventory...",
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: AppColors.textSecondary,
                       fontSize: 14,
                     ),
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.search,
                       color: AppColors.textSecondary,
                     ),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear, size: 16),
+                      onPressed: () {
+                        _searchController.clear();
+                        _fetchData();
+                      },
+                    ),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 12,
                     ),
@@ -391,7 +415,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(width: 16),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () => _showAddEditItemDialog(),
                 icon: const Icon(Icons.add, size: 20, color: Colors.white),
                 label: const Text(
                   "Add Item",
@@ -628,27 +652,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Row(
                   children: [
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          _inventoryFuture = _inventoryService
+                              .fetchLowStockItems();
+                        });
+                      },
                       icon: const Icon(
                         Icons.filter_list,
                         size: 18,
                         color: AppColors.textSecondary,
                       ),
                       label: const Text(
-                        "Filter",
+                        "Low Stock",
                         style: TextStyle(color: AppColors.textSecondary),
                       ),
                     ),
                     const SizedBox(width: 8),
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          _inventoryFuture = _inventoryService.fetchInventory();
+                        });
+                      },
                       icon: const Icon(
-                        Icons.download,
+                        Icons.clear_all,
                         size: 18,
                         color: AppColors.textSecondary,
                       ),
                       label: const Text(
-                        "Export",
+                        "Clear Filter",
                         style: TextStyle(color: AppColors.textSecondary),
                       ),
                     ),
@@ -933,14 +966,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   padding: const EdgeInsets.all(4),
                                   constraints: const BoxConstraints(),
                                   icon: const Icon(
+                                    Icons.add_shopping_cart,
+                                    size: 18,
+                                    color: Colors.green,
+                                  ),
+                                  tooltip: 'Restock',
+                                  hoverColor: Colors.green.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  onPressed: () => _showRestockDialog(item),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: AppColors.border),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: IconButton(
+                                  padding: const EdgeInsets.all(4),
+                                  constraints: const BoxConstraints(),
+                                  icon: const Icon(
                                     Icons.edit_outlined,
                                     size: 18,
                                     color: AppColors.primary,
                                   ),
+                                  tooltip: 'Edit',
                                   hoverColor: AppColors.primary.withValues(
                                     alpha: 0.1,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () =>
+                                      _showAddEditItemDialog(item: item),
                                 ),
                               ),
                               const SizedBox(width: 8),
@@ -957,8 +1013,64 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     size: 18,
                                     color: Colors.red,
                                   ),
+                                  tooltip: 'Delete',
                                   hoverColor: Colors.red.withValues(alpha: 0.1),
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    final confirm = await showDialog<bool>(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: const Text('Delete Item'),
+                                        content: Text(
+                                          'Are you sure you want to delete ${item.name}?',
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, false),
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, true),
+                                            child: const Text(
+                                              'Delete',
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                    if (confirm == true) {
+                                      try {
+                                        await _inventoryService.deleteItem(
+                                          item.id,
+                                        );
+                                        _fetchData();
+                                        if (!context.mounted) return;
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Item deleted successfully',
+                                            ),
+                                          ),
+                                        );
+                                      } catch (e) {
+                                        if (!context.mounted) return;
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text(e.toString()),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  },
                                 ),
                               ),
                             ],
@@ -1015,6 +1127,171 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showRestockDialog(InventoryItem item) {
+    final TextEditingController amountController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Restock ${item.name}'),
+          content: TextField(
+            controller: amountController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Added Amount',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final amount = int.tryParse(amountController.text) ?? 0;
+                if (amount > 0) {
+                  Navigator.pop(context);
+                  try {
+                    await _inventoryService.restockItem(item.id, amount);
+                    _fetchData();
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Item restocked successfully'),
+                      ),
+                    );
+                  } catch (e) {
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(e.toString()),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                }
+              },
+              child: const Text('Restock'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showAddEditItemDialog({InventoryItem? item}) {
+    final isEditing = item != null;
+    final nameController = TextEditingController(text: item?.name ?? '');
+    final categoryController = TextEditingController(
+      text: item?.category ?? '',
+    );
+    final quantityController = TextEditingController(
+      text: item?.quantity.toString() ?? '',
+    );
+    // Using 10 as default low stock threshold
+    final lowStockController = TextEditingController(text: '10');
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(isEditing ? 'Edit Item' : 'Add Item'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: categoryController,
+                  decoration: const InputDecoration(
+                    labelText: 'Category',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: quantityController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Quantity',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: lowStockController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Low Stock Threshold',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final name = nameController.text.trim();
+                final category = categoryController.text.trim();
+                final quantity = int.tryParse(quantityController.text) ?? 0;
+                final lowStock = int.tryParse(lowStockController.text) ?? 10;
+
+                if (name.isNotEmpty && category.isNotEmpty) {
+                  Navigator.pop(context);
+                  try {
+                    final itemData = {
+                      'name': name,
+                      'category': category,
+                      'quantity': quantity,
+                      'lowStock': lowStock,
+                    };
+                    if (isEditing) {
+                      await _inventoryService.updateItem(item.id, itemData);
+                    } else {
+                      await _inventoryService.addItem(itemData);
+                    }
+                    _fetchData();
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          isEditing ? 'Item updated' : 'Item added',
+                        ),
+                      ),
+                    );
+                  } catch (e) {
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(e.toString()),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                }
+              },
+              child: Text(isEditing ? 'Update' : 'Add'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
