@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  /* Employee Management Light Theme Colors */
+  --color-primary: #1e40af;
+  --color-primary-dark: #1e3a8a;
+  --color-primary-light: #3b82f6;
+  --color-secondary: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-border: #e2e8f0;
+
+  --font-display: Inter, sans-serif;
+
+  --radius-default: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  body {
+    @apply font-display bg-background text-text-primary min-h-screen;
+    background-color: #f8fafc;
+    color: #1e293b;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark text-white font-semibold py-2 px-4 rounded-default transition-all;
+  }
+
+  .card {
+    @apply bg-white rounded-lg border border-border shadow-sm overflow-hidden;
+  }
+
+  .form-input {
+    @apply w-full rounded-default border-2 border-border bg-white text-text-primary focus:ring-primary focus:border-primary px-4 h-12 transition-all;
+  }
+}
