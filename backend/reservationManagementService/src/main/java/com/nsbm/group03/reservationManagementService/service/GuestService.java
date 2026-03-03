@@ -42,7 +42,7 @@ public class GuestService {
     }
 
     public GuestDTO findGuestByPhoneNumber(String phoneNumber){
-       Guest guest= guestRepository.findByPhoneNumber(phoneNumber);
+        Guest guest= guestRepository.findByPhoneNumber(phoneNumber);
         return modelMapper.map(guest,GuestDTO.class);
     }
 

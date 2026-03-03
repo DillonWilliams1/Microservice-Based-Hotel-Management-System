@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping (value = "api/v1/guest")
+@CrossOrigin(origins = "*")
 
 public class GuestController {
 
