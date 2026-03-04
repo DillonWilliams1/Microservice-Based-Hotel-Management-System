@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { authService } from '../services/api';
 import './Login.css';
 
 const Login = () => {
@@ -10,31 +9,18 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    try {
-      const response = await authService.login({ username, password });
+    const result = login(username, password);
 
-      if (response.data.success) {
-        const { token, username: userName, email, fullName, role, employeeId } = response.data.data;
-        login(token, { username: userName, email, fullName, role, employeeId });
-      } else {
-        setError(response.data.message || 'Login failed');
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      // Check for mixed content or network errors
-      if (err.message && err.message.includes('Mixed Content')) {
-        setError('Security Error: Please use the local development server (http://localhost:5173) or configure HTTPS on the backend.');
-      } else {
-        setError(err.response?.data?.message || err.message || 'Invalid username or password');
-      }
-    } finally {
-      setLoading(false);
+    if (!result.success) {
+      setError(result.message || 'Invalid username or password');
     }
+
+    setLoading(false);
   };
 
   return (
@@ -42,13 +28,13 @@ const Login = () => {
       <div className="login-card">
         <div className="login-header">
           <img src="/Hotel_Logo.png" alt="Hotel Logo" className="login-logo" />
-          <h1>Employee Management</h1>
+          <h1>Kitchen Management</h1>
           <p>Sign in to your account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           {error && <div className="error-message">{error}</div>}
-          
+
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
@@ -81,8 +67,9 @@ const Login = () => {
 
         <div className="login-footer">
           <p className="help-text">
-            <strong>Admin credentials:</strong><br/>
-            Username: <strong>admin</strong><br/>
+            Username: <strong>admin</strong>
+          </p>
+          <p className="help-text">
             Password: <strong>admin123</strong>
           </p>
         </div>
