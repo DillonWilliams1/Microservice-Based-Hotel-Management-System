@@ -26,9 +26,27 @@ public class DataInitializer implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        // Check if database is already initialized
-        if (employeeRepository.count() > 0) {
-            logger.info("Database already contains data. Skipping initialization.");
+        // Always ensure admin user exists
+        if (employeeRepository.findByUsername("admin").isEmpty()) {
+            logger.info("Creating admin user...");
+            Employee admin = createEmployeeWithPassword("Admin", "User", "admin@hotel.com", "0770000000",
+                "System Administrator", "MANAGEMENT", 150000.0, 
+                LocalDate.of(2019, 1, 1), "ACTIVE", "123 Main Street, Colombo",
+                "admin", "ADMIN", "admin123");
+            employeeRepository.save(admin);
+            logger.info("=====================================");
+            logger.info("Admin user created successfully!");
+            logger.info("  Username: admin");
+            logger.info("  Password: admin123");
+            logger.info("  Email: admin@hotel.com");
+            logger.info("=====================================");
+        } else {
+            logger.info("Admin user already exists");
+        }
+        
+        // Check if database is already initialized with sample data
+        if (employeeRepository.count() > 1) {
+            logger.info("Database already contains sample data. Skipping initialization.");
             return;
         }
         
@@ -119,7 +137,7 @@ public class DataInitializer implements CommandLineRunner {
             createEmployee("Aruna", "Wickremesinghe", "aruna.wickremesinghe@hotel.com", "0716789012",
                 "General Manager", "MANAGEMENT", 125000.0, 
                 LocalDate.of(2019, 1, 1), "ACTIVE", "579 Green Path, Colombo 03",
-                "admin", "ADMIN"),
+                "aruna", "ADMIN"),
             
             createEmployee("Sachini", "Kumarasinghe", "sachini.kumarasinghe@hotel.com", "0717890123",
                 "HR Manager", "MANAGEMENT", 92000.0, 
@@ -145,7 +163,13 @@ public class DataInitializer implements CommandLineRunner {
         
         employeeRepository.saveAll(employees);
         logger.info("Successfully initialized database with {} employees", employees.size());
-        logger.info("Default password for all employees: password123");
+        logger.info("=====================================\n" +
+                    "Admin Login Credentials:\n" +
+                    "  Username: admin\n" +
+                    "  Password: admin123\n" +
+                    "  Email: admin@hotel.com\n" +
+                    "=====================================\n" +
+                    "Default password for all other employees: password123");
     }
     
     private Employee createEmployee(String firstName, String lastName, String email, String phone,
@@ -165,6 +189,29 @@ public class DataInitializer implements CommandLineRunner {
         employee.setAddress(address);
         employee.setUsername(username);
         employee.setPassword(passwordEncoder.encode("password123"));
+        employee.setRole(role);
+        employee.setAccountLocked(false);
+        employee.setLoginAttempts(0);
+        return employee;
+    }
+    
+    private Employee createEmployeeWithPassword(String firstName, String lastName, String email, String phone,
+                                     String position, String department, Double salary, 
+                                     LocalDate hireDate, String status, String address,
+                                     String username, String role, String password) {
+        Employee employee = new Employee();
+        employee.setFirstName(firstName);
+        employee.setLastName(lastName);
+        employee.setEmail(email);
+        employee.setPhone(phone);
+        employee.setPosition(position);
+        employee.setDepartment(department);
+        employee.setSalary(salary);
+        employee.setHireDate(hireDate);
+        employee.setStatus(status);
+        employee.setAddress(address);
+        employee.setUsername(username);
+        employee.setPassword(passwordEncoder.encode(password));
         employee.setRole(role);
         employee.setAccountLocked(false);
         employee.setLoginAttempts(0);
