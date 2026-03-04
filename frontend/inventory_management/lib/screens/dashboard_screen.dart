@@ -987,6 +987,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   padding: const EdgeInsets.all(4),
                                   constraints: const BoxConstraints(),
                                   icon: const Icon(
+                                    Icons.remove_shopping_cart_outlined,
+                                    size: 18,
+                                    color: Colors.orange,
+                                  ),
+                                  tooltip: 'Consume',
+                                  hoverColor: Colors.orange.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  onPressed: () => _showConsumeDialog(item),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: AppColors.border),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: IconButton(
+                                  padding: const EdgeInsets.all(4),
+                                  constraints: const BoxConstraints(),
+                                  icon: const Icon(
                                     Icons.edit_outlined,
                                     size: 18,
                                     color: AppColors.primary,
@@ -1177,6 +1198,63 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 }
               },
               child: const Text('Restock'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showConsumeDialog(InventoryItem item) {
+    final TextEditingController amountController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Consume ${item.name}'),
+          content: TextField(
+            controller: amountController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Consume Amount',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final amount = int.tryParse(amountController.text) ?? 0;
+                if (amount > 0) {
+                  Navigator.pop(context);
+                  try {
+                    await _inventoryService.consumeItem(item.id, amount);
+                    _fetchData();
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Item consumed successfully'),
+                      ),
+                    );
+                  } catch (e) {
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          e.toString().replaceAll('Exception: ', ''),
+                        ),
+                        backgroundColor: Colors.red,
+                        duration: const Duration(seconds: 4),
+                      ),
+                    );
+                  }
+                }
+              },
+              child: const Text('Consume'),
             ),
           ],
         );
