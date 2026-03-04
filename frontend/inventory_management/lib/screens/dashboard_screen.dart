@@ -1193,8 +1193,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final quantityController = TextEditingController(
       text: item?.quantity.toString() ?? '',
     );
-    // Using 10 as default low stock threshold
-    final lowStockController = TextEditingController(text: '10');
+    // Using 10 as default low stock threshold for new items
+    final lowStockController = TextEditingController(
+      text: item?.lowStock.toString() ?? '10',
+    );
 
     showDialog(
       context: context,
