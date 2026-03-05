@@ -132,9 +132,9 @@ const ViewReservationsPage = () => {
                 </div>
                 <div className="flex flex-1 justify-end gap-8">
                     <nav className="flex items-center gap-8">
-                        <button onClick={() => navigate('/')} className="text-slate-600 hover:text-primary text-sm font-medium">Dashboard</button>
+                        <button onClick={() => navigate('/')} className="text-slate-600 hover:text-primary text-sm font-medium transition-colors">Dashboard</button>
                         <button onClick={() => navigate('/reservations')} className="text-primary text-sm font-bold border-b-2 border-primary pb-1">Reservations</button>
-                        <button className="text-slate-600 hover:text-primary text-sm font-medium">Guests</button>
+                        <button onClick={() => navigate('/guests')} className="text-slate-600 hover:text-primary text-sm font-medium transition-colors">Guests</button>
                     </nav>
                 </div>
             </header>
@@ -267,6 +267,9 @@ const ViewReservationsPage = () => {
                     </div>
                 </div>
             </main>
+            <footer className="mt-auto py-6 px-10 border-t border-slate-200 text-center">
+                <p className="text-sm text-slate-500">© {new Date().getFullYear()} Hotel Management Systems. All rights reserved.</p>
+            </footer>
         </div>
     );
 };
