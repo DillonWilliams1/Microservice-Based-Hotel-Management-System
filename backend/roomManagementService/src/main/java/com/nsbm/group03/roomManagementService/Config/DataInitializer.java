@@ -89,8 +89,8 @@ public class DataInitializer implements CommandLineRunner {
                 room.setRoomId(UUID.randomUUID().toString());
                 room.setRoomNumber(roomNumber);
                 room.setRoomType(type);
-                room.setPricePerNight(type == RoomType.SINGLE ? 50.0
-                        : type == RoomType.DOUBLE ? 80.0 : 120.0);
+                room.setPricePerNight(type == RoomType.SINGLE ? 5000.0
+                        : type == RoomType.DOUBLE ? 8000.0 : 12000.0);
                 room.setCapacity(type == RoomType.SINGLE ? 1 : 2);
                 room.setStatus(null); // will default to AVAILABLE
 
