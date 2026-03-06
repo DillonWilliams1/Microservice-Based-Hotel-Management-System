@@ -1,9 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
-import Login from './pages/Login';
 import Dashboard from './pages/rooms/Dashboard';
 import RoomList from './pages/rooms/RoomList';
 import RoomDetails from './pages/rooms/RoomDetails';
@@ -28,55 +26,40 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            <Route path="/login" element={<Login />} />
             <Route path="/" element={
-              <ProtectedRoute>
-                <Layout>
-                  <Dashboard />
-                </Layout>
-              </ProtectedRoute>
+              <Layout>
+                <Dashboard />
+              </Layout>
             } />
             <Route path="/rooms" element={
-              <ProtectedRoute>
-                <Layout>
-                  <RoomList />
-                </Layout>
-              </ProtectedRoute>
+              <Layout>
+                <RoomList />
+              </Layout>
             } />
             <Route path="/rooms/add" element={
-              <ProtectedRoute>
-                <Layout>
-                  <AddRoom />
-                </Layout>
-              </ProtectedRoute>
+              <Layout>
+                <AddRoom />
+              </Layout>
             } />
             <Route path="/rooms/edit/:roomNumber" element={
-              <ProtectedRoute>
-                <Layout>
-                  <EditRoom />
-                </Layout>
-              </ProtectedRoute>
+              <Layout>
+                <EditRoom />
+              </Layout>
             } />
             <Route path="/rooms/:roomNumber/history" element={
-              <ProtectedRoute>
-                <Layout>
-                  <StatusHistory />
-                </Layout>
-              </ProtectedRoute>
+              <Layout>
+                <StatusHistory />
+              </Layout>
             } />
             <Route path="/rooms/:roomNumber" element={
-              <ProtectedRoute>
-                <Layout>
-                  <RoomDetails />
-                </Layout>
-              </ProtectedRoute>
+              <Layout>
+                <RoomDetails />
+              </Layout>
             } />
             <Route path="/room-statistics" element={
-              <ProtectedRoute>
-                <Layout>
-                  <Statistics />
-                </Layout>
-              </ProtectedRoute>
+              <Layout>
+                <Statistics />
+              </Layout>
             } />
           </Routes>
         </AuthProvider>
