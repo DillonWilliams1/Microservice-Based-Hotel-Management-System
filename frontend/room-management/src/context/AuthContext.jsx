@@ -1,39 +1,26 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [user, setUser] = useState({ id: 'default', name: 'Admin User', email: 'admin@hotel.com' });
+  const [token, setToken] = useState('default-token');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    // Keep default authentication active
+    setUser({ id: 'default', name: 'Admin User', email: 'admin@hotel.com' });
+    setToken('default-token');
   }, []);
 
   const login = (tokenData, userData) => {
-    localStorage.setItem('token', tokenData);
-    localStorage.setItem('user', JSON.stringify(userData));
     setToken(tokenData);
     setUser(userData);
-    navigate('/');
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setToken(null);
-    setUser(null);
-    navigate('/login');
+    setToken('default-token');
+    setUser({ id: 'default', name: 'Admin User', email: 'admin@hotel.com' });
   };
 
   const value = {
